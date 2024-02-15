@@ -1,0 +1,4 @@
+Flask==0.10.1
+google-cloud-storage
+mysql-connector-python==8.0.22
+mysql-connector-python-rf==2.2.2

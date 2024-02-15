@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Helvetica, sans-serif;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            background-color: #ffffff;
+        }
+
+        .grid-item {
+            background-color: #fffff0;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            /* padding-bottom: 30%; */
+        }
+
+        .parallel {
+            overflow: hidden;
+        }
+
+        .button {
+            border: none;
+            color: #fffff0;
+            padding: 5px 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: #380015;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>View Items</h2>
+
+    <div class="grid-container">
+        {% for item in data %}
+        <div class="grid-item">
+            <h3>{{item[1]}}</h3>
+            <p>{{item[2]}}</p>
+            <p><small>{{item[3]}}</small></p>
+            <h4>${{item[5]}}</h4>
+            <form action="{{url_for('addquantity')}}" method="POST">
+                <input type="text" id="productId" name="productId"
+                    style="width: 100%; font-size: 5px; justify-content: center; text-align: center; visibility:hidden"
+                    value="{{item[0]}}">
+                <label for="quantity">Quantity (max 10):</label>
+                <input type="number" id="quantity" name="quantity" min="1" max="10"
+                    style="width: 20%; font-size: 16px">
+                <button type="submit" class="button">Add</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>

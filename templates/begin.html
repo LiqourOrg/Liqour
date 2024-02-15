@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Liquor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            font-family: Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        body {
+            margin: 20px auto;
+            background-color: #380015;
+        }
+
+        /* Style the header */
+        .header {
+            padding: 21% 0;
+            text-align: center;
+            background-color: #380015;
+            color: #fffff8;
+        }
+
+        /* Increase the font size of the h1 element */
+        .header h1 {
+            font-size: 40px;
+        }
+
+        .parallel {
+            align-content: center;
+            justify-content: center;
+            color: #fffff8;
+            overflow: hidden;
+            opacity: 1;
+            margin-top: 20px;
+        }
+
+        .button {
+            border: none;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 4px;
+            transition-duration: 0.2s;
+            cursor: pointer;
+            background-color: #fffff8;
+        }
+
+        .button:hover {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <script id="errorCheck" data-error={{error}}>
+            function checkError() {
+                error=document.getElementById('errorCheck').getAttribute("data-error");
+                // window.alert(error);
+                if (error != "<None>") {
+                    alert(error);
+                }
+            }
+            checkError();
+        </script>
+        <h1>Liquor</h1>
+        <p>Your one stop shop for all liquor needs.</p>
+        <div class="parallel">
+            <a href="/getuserinput"><button class="button">Register as new user</button></a>
+            <a href="/trylogin"><button class="button">Login</button></a>
+            <a href="/tryloginseller"><button class="button">Login as seller</button></a>
+        </div>
+    </div>
+
+</body>
+
+</html>

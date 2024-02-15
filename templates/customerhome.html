@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Helvetica, sans-serif;
+        }
+
+        a:link {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #636363;
+            text-decoration: none;
+        }
+
+        a:active {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        /* Float five columns side by side */
+        .column1 {
+            float: left;
+            width: 20%;
+            padding: 0 10px;
+        }
+
+        /* Float seven columns side by side */
+        .column2 {
+            float: left;
+            width: 14.25%;
+            padding: 0 10px;
+        }
+
+        /* Remove extra left and right margins, due to padding */
+        .row {
+            margin: 10px -5px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive columns */
+        @media screen and (max-width: 600px) {
+            .column {
+                width: 100%;
+                display: block;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Style the counter cards */
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            text-align: center;
+            background-color: #fffff0;
+        }
+
+        .parallel {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button {
+            border: none;
+            color: #fffff0;
+            padding: 5px 5px;
+            text-align: center;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: #380015;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="parallel">
+        <h2>Home Page</h2>
+        <a href="/getcart"><button class="button">Cart ></button></a>
+    </div>
+
+
+    <div class="parallel">
+        <h3>Bestsellers:</h3>
+        <a href="/viewproducts"><button class="button">View All Products ></button></a>
+    </div>
+    <div class="row">
+        {% for item in bestsellers %}
+        <div class="column1">
+            <div class="card">
+                <h3>{{item[1]}}</h3>
+                <p>{{item[2]}}</p>
+                <p><small>{{item[3]}}</small></p>
+                <h4>${{item[4]}}</h4>
+                <form action="{{url_for('addquantity')}}" method="POST">
+                    <input type="text" id="productId" name="productId"
+                        style="width: 100%; font-size: 5px; justify-content: center; text-align: center; visibility:hidden"
+                        value="{{item[0]}}">
+                    <label for="quantity">Quantity (max 10):</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="10"
+                        style="width: 20%; font-size: 16px">
+                    <button type="submit" class="button">Add</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 style="padding-top: 20px;">Categories:</h3>
+    <div class="row">
+        {% for item in categories %}
+        <div class="column2">
+
+            <div class="card">
+                <h3>{{item[0]}}</h3>
+                <p>{{item[1]}} product(s)</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>

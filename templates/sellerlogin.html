@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        * {
+            font-family: Helvetica, sans-serif;
+            text-align: center;
+        }
+        body {
+            margin: 20px auto;
+            background-color: #380015;
+        }
+        h1 {
+            font-size: 40px;
+            color: #fffff8;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            color: #fffff8;
+        }
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            width: 100%; 
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #fffff8;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition-duration: 0.2s;
+        }
+
+        input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+    </style>
+    
+</head>
+
+<body>
+
+    <h1>Login to seller's account</h1>
+    <form action="{{url_for('loginseller')}}" name="myForm" method="post">
+        <div class="form-group">
+            <label>Enter your username</label> <span id="error-username"></span>
+            <input type="text" name="username" class="form-control" placeholder="username" required>
+        </div>
+        <div class="form-group">
+            <label>Enter your password</label> <span id="error-password"></span>
+            <input type="password" name="password" class="form-control" placeholder="password" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Send">
+        </div>
+    </form>
+</body>
+
+</html>

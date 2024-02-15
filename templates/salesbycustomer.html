@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    * {
+      font-family: Helvetica, sans-serif;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Sales By Customer</h2>
+
+  <table>
+    <tr>
+      <th>Customer Name</th>
+      <th>Orders</th>
+      <th>Total Sales</th>
+      <th>Average amount spent per transaction</th>
+    </tr>
+
+    {% for item in data %}
+    <tr>
+      <td>{{item[1]}} {{item[2]}}</td>
+      <td>{{item[3]}}</td>
+      <td>{{item[4]}}</td>
+      <td>{{item[5]}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+
+</html>
