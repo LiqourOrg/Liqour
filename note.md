@@ -521,3 +521,517 @@ if __name__ == "__main__":
 
 # if __name__ == "__main__":
 #     app.run(debug=True)
+
+
+
+
+
+
+
+
+
+# CS 348 Project
+from flask import Flask, render_template, request
+import mysql.connector
+from mysql.connector import errorcode
+
+from datetime import datetime
+
+app = Flask(__name__)
+username = "admin"
+password = "password123"
+alc_categories = ["wine", "tequila", "vodka", "whiskey", "gin", "beer", "liqueur"]
+cid = -1
+
+
+@app.route("/")
+def homepage():
+    return render_template("begin.html", title="Liquore", error="<None>")
+
+
+def get_cid():
+    global cid
+    return cid
+
+
+def select_all_ps(table_name):
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    query = "SELECT * FROM %s;" % table_name
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+
+    return data
+
+
+def products_by_category(category):
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor(prepared=True)
+    query = "SELECT * FROM Product WHERE category = %s;"
+    cursor.execute(query, (category, ))
+    data = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+    return data
+
+@app.route("/viewbycategory")
+def view_by_category():
+    return 0
+
+def get_categories():
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    query = "SELECT category, COUNT(productId) FROM Product GROUP BY category ORDER BY COUNT(productId) DESC;"
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+    return data
+
+@app.route("/viewproducts")
+def view_products():
+    data = select_all_ps("Product")
+    return render_template("viewproducts.html", title="Products | Liquore", data=data)
+
+
+@app.route("/viewinventory")
+def view_inventory():
+    data = select_all_ps("Product")
+    return render_template("inventory.html", title="Inventory | Liquore", data=data)
+
+
+def customer_order_history():
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor(prepared=True)
+    cart_id = get_cart_id()
+    # Finding OrderIds that are not cart
+    query = "SELECT orderId, transactionAmount, customerId FROM Orders WHERE orderId <> %s;" % cart_id
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+    return data
+
+# Reports
+
+@app.route("/salesbycustomer")
+def sales_by_customer():
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    # Finding OrderIds by customer
+    query = "SELECT Orders.customerId, Customer.firstName, Customer.lastName, COUNT(orderId), SUM(transactionAmount), AVG(transactionAmount) FROM Orders INNER JOIN Customer ON Orders.customerId = Customer.customerId WHERE orderId IS NOT NULL GROUP BY Orders.customerId;"
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+    return render_template("salesbycustomer.html", title="Sales Report | Liquore", data=data)
+
+
+def view_top_sellers():
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    query = "SELECT DISTINCT p.productId, p.name, p.category, p.description, p.price, SUM(o.quantity), p.inventoryQuantity FROM Product p, OrderItem o WHERE o.productId = p.productId AND o.orderId IN (SELECT orderId FROM Orders WHERE completedDate IS NOT NULL) GROUP BY o.productId, p.name, p.category, p.description, p.price, p.inventoryQuantity ORDER BY SUM(o.quantity) DESC LIMIT 5;"
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+    return data
+
+
+def monthly_sales_report(month):
+    try:
+        cnx = mysql.connector.connect(user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+ 
+    cursor = cnx.cursor()
+    query = "SELECT firstName, lastName, transactionAmount, round((transactionAmount * .07),2) AS SALES_TAX, round((transactionAmount * .93),2) AS REVENUE from Customer C inner join Orders O on C.customerid = O.customerid where MONTH(completedDate) = %s;" % month
+    cursor.execute(query)
+    data = cursor.fetchall()
+ 
+    cursor.close()
+    cnx.close()
+    return render_template("monthlysales.html", title="Monthly Sales Report | Liquore", data=data)
+
+
+@app.route("/monthlysalesreport")
+def currentmonthreport():
+    return monthly_sales_report(int(datetime.today().month))
+
+def completed_orders_ps():
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    query = "SELECT orderId FROM Orders WHERE completedDate IS NOT NULL;"
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+    return data
+
+
+def get_cart_id():
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor(prepared=True)
+    print(get_cid())
+    # query = "SELECT orderId FROM Orders WHERE customerId = %s AND completedDate IS NULL"  # Finding CartID
+    cursor.execute("SELECT orderId FROM Orders WHERE customerId = %s AND completedDate IS NULL;" % (get_cid(), ))
+    data = cursor.fetchall()
+    print(data[0])
+    print("data[0][0]", data[0][0])
+
+    cursor.close()
+    cnx.close()
+    return data[0][0]
+
+
+def add_to_cart(qty, product_id):
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    order_id = get_cart_id()
+    print("Back from get cart")
+    print(product_id)
+    print(order_id)
+    print(qty)
+    cursor.execute("SELECT name, category, price FROM Product WHERE productId = %s;" % product_id)
+    data1 = cursor.fetchall()
+    cursor.execute("SELECT quantity FROM OrderItem WHERE orderId = %s AND productId = %s;" % (order_id, product_id))
+    data = cursor.fetchall()
+    num = cursor.rowcount
+    if (num == 0):
+        print("Item doesn't exist in cart yet")
+        query = "INSERT INTO OrderItem VALUES(%s, %s, %s);" % (
+            order_id, product_id, qty)
+        cursor.execute(query)
+        cnx.commit()
+
+        # Update inventory quantity
+        cursor.execute("UPDATE Product SET inventoryQuantity = inventoryQuantity - %s WHERE productId = %s;" % (qty, product_id))
+        cnx.commit()
+    else:
+        print("Item already exists in cart")
+        cursor.execute("UPDATE OrderItem SET quantity = %s WHERE orderId = %s AND productId = %s;" % (
+            qty, order_id, product_id))
+        cnx.commit()
+
+        # Update inventory quantity
+        cursor.execute("UPDATE Product SET inventoryQuantity = inventoryQuantity - %s WHERE productId = %s;" % (qty, product_id))
+        cnx.commit()
+
+    cursor.close()
+    cnx.close()
+    return data1
+
+def check_inventory(qty, product_id):
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    checkQty = "SELECT inventoryQuantity FROM Product WHERE productId = %s;" % product_id
+    cursor.execute(checkQty)
+    data = cursor.fetchone()
+    if (data[0] - int(qty) < 0):
+        cursor.close()
+        cnx.close()
+        return False
+    else:
+        cursor.close()
+        cnx.close()
+        return True
+
+@app.route("/getcart")
+def getcartitems():
+    try:
+        cnx = mysql.connector.connect(
+            user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    order_id = get_cart_id()
+    query = "SELECT o.productId, p.name, p.category, o.quantity, (p.price * o.quantity) as TotalPrice FROM OrderItem o INNER JOIN Product p ON o.productId = p.productId WHERE o.orderId = %s;" % order_id
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+
+    return render_template("cart.html", title="Cart | Liquore", data=data)
+
+
+@app.route('/addquantity', methods=['POST', 'GET'])
+def addquantity():
+    if request.method == 'POST':
+        result = request.form
+        qty = result.get('quantity')
+        product_id = result.get('productId')
+        print(product_id)
+        print(qty)
+        bool_add = check_inventory(qty, product_id)
+
+        if (bool_add):
+            add_to_cart(qty, product_id)
+            return getcartitems()
+        else:
+            return "Not enough in inventory"
+    else:
+        return "Not a POST request"
+
+
+@app.route('/completeorder')
+def complete_order():
+    try:
+        cnx = mysql.connector.connect(user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    order_id = get_cart_id()
+    now = datetime.now()
+    dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
+
+    # Change date in Orders
+    query = "UPDATE Orders SET completedDate = '%s' WHERE orderId = %s;" % (dt_string, order_id)
+    cursor.execute(query)
+    cnx.commit()
+
+    cursor.close()
+    cnx.close()
+
+    return homepage()
+
+
+@app.route('/cancelorder')
+def cancel_order():
+    try:
+        cnx = mysql.connector.connect(user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+
+    cursor = cnx.cursor()
+    order_id = get_cart_id()
+
+    # Delete all items from cart
+    query = "DELETE FROM OrderItem WHERE orderId = %s;" % order_id
+    cursor.execute(query)
+    cnx.commit()
+
+    cursor.close()
+    cnx.close()
+
+    return homepage()
+
+
+@app.route("/newcustomer")
+def new_customer():
+    return render_template("newcustomer.html", title="New Customer | Liquore")
+
+
+@app.route('/createcustomer', methods=['POST', 'GET'])
+def createcustomer():
+    if request.method == 'POST':
+        result = request.form
+        fname = result.get('firstName')
+        lname = result.get('lastName')
+        email = result.get('email')
+        phone = result.get('phone')
+
+        try:
+            cnx = mysql.connector.connect(
+                user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+        except mysql.connector.Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Something is wrong with your user name or password")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                print("Database does not exist")
+            else:
+                print(err)
+
+        cursor = cnx.cursor()
+        query = "INSERT INTO Customer(firstName, lastName, email, phone) VALUES('%s', '%s', '%s', '%s');" % (
+            fname, lname, email, phone)
+        cursor.execute(query)
+        cnx.commit()
+
+        cursor.close()
+        cnx.close()
+
+        return homepage()
+    else:
+        return "Not a POST request"
+
+
+@app.route("/login", methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        result = request.form
+        username = result.get('username')
+        password = result.get('password')
+
+        try:
+            cnx = mysql.connector.connect(
+                user='root', password='Betty123!', host='localhost', port='33061', database='village_bottle_shoppe')
+        except mysql.connector.Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Something is wrong with your user name or password")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                print("Database does not exist")
+            else:
+                print(err)
+
+        cursor = cnx.cursor()
+        query = "SELECT customerId FROM Users WHERE username = '%s' AND password = '%s';" % (
+            username, password)
+        cursor.execute(query)
+        data = cursor.fetchall()
+        num = cursor.rowcount
+
+        cursor.close()
+        cnx.close()
+
+        if (num > 0):
+            global cid
+            cid = data[0][0]
+            return homepage()
+        else:
+            return render_template("login.html", title="Login | Liquore", error="Invalid Credentials")
+    else:
+        return render_template("login.html", title="Login | Liquore", error="<None>")
+
+
+@app.route("/logout")
+def logout():
+    global cid
+    cid = -1
+    return homepage()
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

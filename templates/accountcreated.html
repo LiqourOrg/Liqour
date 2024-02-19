@@ -5,20 +5,73 @@
     <style>
         * {
             font-family: Helvetica, sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #380015;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #474747;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        h2 {
+            margin: 10px 0;
+            background-color: #331245;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #aaaaaa;
+        }
+
+        h3 {
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>Account creation successful.</h1>
+    <div class="container">
+        <h1>Account creation successful.</h1>
 
-    <p>Thank you, {{userName}}, for making an account with us! This will be your userId, and is the only thing required for you to log
-        in to our account. Please keep this number saved to continue shopping with us!</p>
+        <p>Thank you, {{userName}}, for making an account with us! This will be your userId, and is the only thing required for you to log
+            in to our account. Please keep this number saved to continue shopping with us!</p>
 
-    <h2>{{userId}}</h2>
+        <h2>{{userId}}</h2>
 
-    <a href='/trylogin'><h3>Go to login page</h3></a>
+        <a href='/trylogin'><h3>Go to login page</h3></a>
+    </div>
 
 </body>
 

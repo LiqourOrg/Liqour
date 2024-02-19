@@ -2,24 +2,61 @@
 <html>
 
 <head>
+    <title>Seller's Home</title>
     <style>
         * {
             font-family: Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #380015; /* Keeping the background color consistent */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffffff; /* Changing text color to white */
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .menu-link {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fffff8; /* Changing link background color */
+            color: #380015; /* Changing link text color */
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .menu-link:hover {
+            background-color: #ff5e62; /* Changing link background color on hover */
         }
     </style>
 </head>
 
-<head>
-    <title>Seller's Home</title>
-</head>
-
 <body>
-    <h1>Menu</h1>
-    <p><a href="/viewinventory">View Inventory</a></p>
-    <p><a href="/viewproducts">View Products</a></p>
-    <p><a href="/salesbycustomer">Sales By Customer</a></p>
-    <p><a href="/monthlysalesreport">Monthly Sales Report for this month</a></p>
-    <p><a href="/">Home</a></p>
+    <div class="container">
+        <h1>Menu</h1>
+        <a class="menu-link" href="/viewinventory">View Inventory</a>
+        <a class="menu-link" href="/viewproducts">View Products</a>
+        <a class="menu-link" href="/salesbycustomer">Sales By Customer</a>
+        <a class="menu-link" href="/monthlysalesreport">Monthly Sales Report for this month</a>
+        <a class="menu-link" href="/">Home</a>
+    </div>
 </body>
 
 </html>

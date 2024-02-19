@@ -5,22 +5,47 @@
     <style>
         * {
             font-family: Helvetica, sans-serif;
+            box-sizing: border-box;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #380015; /* Set background color */
+            color: #ffffff; /* Set text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
         }
 
-        td,
-        th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
+        h2 {
+            margin-bottom: 20px;
         }
 
-        tr:nth-child(even) {
-            background-color: #dddddd;
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #331245; /* Set card background color */
+            color: #ffffff; /* Set card text color */
+            padding: 20px;
+            border-radius: 10px; /* Add border radius */
+            width: 300px; /* Set card width */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add shadow */
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -28,23 +53,17 @@
 <body>
     <h2>View Inventory</h2>
 
-    <table>
-        <tr>
-            <th>Product ID</th>
-            <th>Product</th>
-            <th>Category</th>
-            <th>Inventory Left</th>
-        </tr>
-
+    <div class="card-container">
         {% for item in data %}
-        <tr>
-            <td>{{item[0]}}</td>
-            <td>{{item[1]}}</td>
-            <td>{{item[2]}}</td>
-            <td>{{item[4]}}</td>
-        </tr>
+        <div class="card">
+            <h3>{{item[1]}}</h3>
+            <p><strong>Product ID:</strong> {{item[0]}}</p>
+            <p><strong>Category:</strong> {{item[2]}}</p>
+            <p><strong>Price:</strong> ${{item[4]}}</p>
+            <p><strong>Inventory Left:</strong> {{item[5]}}</p>
+        </div>
         {% endfor %}
-    </table>
+    </div>
 </body>
 
 </html>

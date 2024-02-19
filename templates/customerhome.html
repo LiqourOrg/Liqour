@@ -7,133 +7,111 @@
         * {
             box-sizing: border-box;
             font-family: Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        a:link {
-            color: #000000;
-            text-decoration: none;
+        body {
+            background-color: #380015;
+            color: #ffffff;
+            padding: 20px;
         }
 
-        a:visited {
+        a {
             color: #000000;
             text-decoration: none;
         }
 
         a:hover {
             color: #636363;
-            text-decoration: none;
         }
 
-        a:active {
-            color: #000000;
-            text-decoration: none;
+        /* Flexbox for header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
-        /* Float five columns side by side */
-        .column1 {
-            float: left;
-            width: 20%;
-            padding: 0 10px;
+        /* Style the header text */
+        .header h2,
+        .header h3 {
+            margin: 0;
+            color: #ffffff;
         }
 
-        /* Float seven columns side by side */
-        .column2 {
-            float: left;
-            width: 14.25%;
-            padding: 0 10px;
-        }
-
-        /* Remove extra left and right margins, due to padding */
+        /* Grid layout for columns */
         .row {
-            margin: 10px -5px;
-        }
-
-        /* Clear floats after the columns */
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        /* Responsive columns */
-        @media screen and (max-width: 600px) {
-            .column {
-                width: 100%;
-                display: block;
-                margin-bottom: 20px;
-            }
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
         /* Style the counter cards */
         .card {
+            background-color: #fffff0;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             padding: 16px;
             text-align: center;
-            background-color: #fffff0;
+            border-radius: 10px;
+            color: #000000;
         }
 
-        .parallel {
-            display: flex;
-            justify-content: space-between;
-        }
-
+        /* Style the button */
         .button {
             border: none;
-            color: #fffff0;
-            padding: 5px 5px;
-            text-align: center;
-            display: inline-block;
+            color: #ffffff;
+            padding: 5px 10px;
             font-size: 14px;
-            margin: 4px 2px;
             cursor: pointer;
             background-color: #380015;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+        }
+
+        /* Button hover effect */
+        .button:hover {
+            background-color: #ff5e62;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="parallel">
-        <h2>Home Page</h2>
+    <div class="header">
+        <h2>Welcome, {{ userName }}</h2>
         <a href="/getcart"><button class="button">Cart ></button></a>
     </div>
 
-
-    <div class="parallel">
+    <div class="header">
         <h3>Bestsellers:</h3>
         <a href="/viewproducts"><button class="button">View All Products ></button></a>
     </div>
+
     <div class="row">
         {% for item in bestsellers %}
-        <div class="column1">
-            <div class="card">
-                <h3>{{item[1]}}</h3>
-                <p>{{item[2]}}</p>
-                <p><small>{{item[3]}}</small></p>
-                <h4>${{item[4]}}</h4>
-                <form action="{{url_for('addquantity')}}" method="POST">
-                    <input type="text" id="productId" name="productId"
-                        style="width: 100%; font-size: 5px; justify-content: center; text-align: center; visibility:hidden"
-                        value="{{item[0]}}">
-                    <label for="quantity">Quantity (max 10):</label>
-                    <input type="number" id="quantity" name="quantity" min="1" max="10"
-                        style="width: 20%; font-size: 16px">
-                    <button type="submit" class="button">Add</button>
-                </form>
-            </div>
+        <div class="card">
+            <h3>{{ item[1] }}</h3>
+            <p>{{ item[2] }}</p>
+            <p><small>{{ item[3] }}</small></p>
+            <h4>${{ item[4] }}</h4>
+            <form action="{{ url_for('addquantity') }}" method="POST">
+                <input type="hidden" name="productId" value="{{ item[0] }}">
+                <label for="quantity">Quantity (max 10):</label>
+                <input type="number" id="quantity" name="quantity" min="1" max="10" style="width: 60px; font-size: 14px;">
+                <button type="submit" class="button">Add</button>
+            </form>
         </div>
         {% endfor %}
     </div>
 
-    <h3 style="padding-top: 20px;">Categories:</h3>
+    <h3>Categories:</h3>
     <div class="row">
         {% for item in categories %}
-        <div class="column2">
-
-            <div class="card">
-                <h3>{{item[0]}}</h3>
-                <p>{{item[1]}} product(s)</p>
-            </div>
+        <div class="card">
+            <h3>{{ item[0] }}</h3>
+            <p>{{ item[1] }} product(s)</p>
         </div>
         {% endfor %}
     </div>

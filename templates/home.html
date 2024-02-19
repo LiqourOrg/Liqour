@@ -2,25 +2,56 @@
 <html>
 
 <head>
+    <title>Menu</title>
     <style>
         * {
             font-family: Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #380015; /* Keeping the background color the same */
+            padding: 20px;
+            text-align: center;
+            color: #ffffff; /* Changing text color to white */
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .menu-button {
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #fffff8; /* Changing button background color */
+            color: #380015; /* Changing button text color */
+            font-size: 18px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .menu-button:hover {
+            background-color: #ff5e62; /* Changing button background color on hover */
         }
     </style>
 </head>
 
-<head>
-    <title>Liquor</title>
-</head>
-
 <body>
     <h1>Menu</h1>
-    <p><a href="/viewinventory">View Inventory</a></p>
-    <p><a href="/viewproducts">View Products</a></p>
-    <p><a href="/salesbycustomer">Sales By Customer</a></p>
-    <p><a href="/bestsellers">Bestsellers</a></p>
-    <p><a href="/getuserinput">Register a new user</a></p>
-    <p><a href="/">Home</a></p>
+    <button class="menu-button" onclick="location.href='/viewinventory'">View Inventory</button>
+    <button class="menu-button" onclick="location.href='/viewproducts'">View Products</button>
+    <button class="menu-button" onclick="location.href='/salesbycustomer'">Sales By Customer</button>
+    <button class="menu-button" onclick="location.href='/bestsellers'">Bestsellers</button>
+    <button class="menu-button" onclick="location.href='/getuserinput'">Register a new user</button>
+    <button class="menu-button" onclick="location.href='/'">Home</button>
 </body>
 
 </html>

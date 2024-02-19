@@ -5,23 +5,90 @@
     <style>
         * {
             font-family: Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #380015;
+        }
+
+        .form-container {
+            background-color: #1f0b0e;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #fffff8;
+        }
+
+        h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #fffff8;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            color: #fffff8;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #380015;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 16px;
+            transition-duration: 0.2s;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ff5e62;
         }
     </style>
 </head>
 
 <body>
-
-    <h1>Login to your account</h1>
-    <h3>You only need the userId that you were given at account registration to do so.</h3>
-    <form action="{{url_for('loginuser')}}" name="myForm" method="post">
-        <div class="form-group">
-            <label>Enter your userId </label> <span id="error-userId"></span>
-            <input type="text" name="userId" class="form-control" placeholder="userId" required>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Send">
-        </div>
-    </form>
+    <div class="form-container">
+        <h1>Login to your account</h1>
+        <h3>You only need the userId that you were given at account registration to do so.</h3>
+        <form action="{{url_for('loginuser')}}" name="myForm" method="post">
+            <div class="form-group">
+                <label>Enter your userId </label> <span id="error-userId"></span>
+                <input type="text" name="userId" class="form-control" placeholder="userId" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Send">
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>

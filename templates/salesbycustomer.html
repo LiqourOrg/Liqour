@@ -5,22 +5,46 @@
   <style>
     * {
       font-family: Helvetica, sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #380015; /* Set background color */
+      color: #ffffff; /* Set text color */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    h2 {
+      margin-bottom: 20px;
     }
 
     table {
       border-collapse: collapse;
-      width: 100%;
+      width: 80%; /* Adjust table width */
+      margin-bottom: 20px;
+      border: 2px solid #ffffff; /* Add border */
+      border-radius: 10px; /* Add border radius */
     }
 
-    td,
+    th,
+    td {
+      border: 1px solid #ffffff; /* Set border color */
+      padding: 10px;
+      text-align: center;
+    }
+
     th {
-      border: 1px solid #dddddd;
-      text-align: left;
-      padding: 8px;
+      background-color: #380015; /* Set header background color */
     }
 
     tr:nth-child(even) {
-      background-color: #dddddd;
+      background-color: #331245; /* Set even row background color */
     }
   </style>
 </head>
