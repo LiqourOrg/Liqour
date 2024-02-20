@@ -103,7 +103,7 @@ To run the Liquor Flask App locally, follow these simple steps.
 4. Run the application:
 
    ```sh
-   python app.py
+   python main.py
    ```
 
 5. Access the app in your web browser at `http://localhost:5000`.
