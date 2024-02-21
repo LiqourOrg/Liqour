@@ -148,4 +148,19 @@ For questions, feedback, or support, please contact the development team at [tea
 
 ```
 
-Make sure to replace the placeholder URL (`https://github.com/LiqourOrg/Liqour/assets/85841088/e150830f-45bb-4838-8410-5a4c3c993efd`) with the correct URL for your logo image.
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/LiqourOrg/Liqour.svg?style=for-the-badge
+[contributors-url]: https://github.com/LiqourOrg/Liqour/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/LiqourOrg/Liqour.svg?style=for-the-badge
+[forks-url]: https://github.com/LiqourOrg/Liqour/network/members
+[stars-shield]: https://img.shields.io/github/stars/LiqourOrg/Liqour.svg?style=for-the-badge
+[stars-url]: https://github.com/LiqourOrg/Liqour/stargazers
+[issues-shield]: https://img.shields.io/github/issues/LiqourOrg/Liqour.svg?style=for-the-badge
+[issues-url]: https://github.com/LiqourOrg/Liqour/issues
+[license-shield]: https://img.shields.io/github/license/LiqourOrg/Liqour.svg?style=for-the-badge
+[license-url]: https://github.com/LiqourOrg/Liqour/blob/master/LICENSE
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/linkedin_username
+[product-screenshot]: images/screenshot.png
