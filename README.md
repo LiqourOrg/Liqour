@@ -146,7 +146,7 @@ Our journey would not be the same without the support, encouragement, and knowle
 
 For questions, feedback, or support, please contact the development team at [team@liquorflaskapp.com](mailto:team@liquorflaskapp.com).
 
-```
+
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
