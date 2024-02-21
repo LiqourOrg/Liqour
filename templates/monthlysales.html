@@ -49,10 +49,57 @@
         #output {
             margin-top: 20px;
         }
+
+        /* Navbar styles */
+        nav {
+            background-color: #380015;
+            color: #ffffff;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensure the navbar is above other content */
+            display: flex;
+            justify-content: space-between; /* Space out the logo and links */
+            align-items: center;
+        }
+
+        nav img {
+            height: 40px; /* Adjust the height of the logo */
+            margin-right: 10px; /* Add some space between logo and links */
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #380015;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
     </style>
 </head>
 
 <body>
+
+    <nav>
+        <a href="/"><img src="logo.png" alt="Logo"></a>
+        <div>
+            <a href="/">Home</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
 
     <h2>Monthly Sales Report</h2>
     <table id="myTable">
@@ -85,6 +132,10 @@
         }
         document.getElementById('output').innerHTML += sum;
     </script>
+
+    <footer>
+        &copy; 2024 Your Company Name
+    </footer>
 
 </body>
 

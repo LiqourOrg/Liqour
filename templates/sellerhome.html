@@ -13,16 +13,34 @@
 
         body {
             background-color: #380015; /* Keeping the background color consistent */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             color: #ffffff; /* Changing text color to white */
+            margin: 0;
+            padding: 0;
         }
 
+        /* Navbar styles */
+        .navbar {
+            background-color: #380015;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .navbar img {
+            height: 40px;
+        }
+
+        /* Container styles */
         .container {
-            text-align: center;
             padding: 20px;
+            text-align: center;
         }
 
         h1 {
@@ -45,18 +63,50 @@
         .menu-link:hover {
             background-color: #ff5e62; /* Changing link background color on hover */
         }
+
+        /* Footer styles */
+        .footer {
+            background-color: #380015;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0; /* Ensure the footer touches the left corner */
+            right: 0; /* Ensure the footer touches the right corner */
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div>
+            <a href="/"><img src="/images/logo.png" alt="Logo"></a>
+        </div>
+        <div>
+            <a href="/">Home</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <!-- Content -->
     <div class="container">
-        <h1>Menu</h1>
+        <h1>Seller's Home</h1>
+        <!-- Add your content here -->
         <a class="menu-link" href="/viewinventory">View Inventory</a>
         <a class="menu-link" href="/viewproducts">View Products</a>
         <a class="menu-link" href="/salesbycustomer">Sales By Customer</a>
         <a class="menu-link" href="/monthlysalesreport">Monthly Sales Report for this month</a>
-        <a class="menu-link" href="/">Home</a>
     </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Liqour
+    </div>
+
 </body>
 
 </html>

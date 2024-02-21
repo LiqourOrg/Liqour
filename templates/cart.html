@@ -13,6 +13,33 @@
             background-color: #380015;
             color: #ffffff;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #380015;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 10px; /* Adjusted margin to separate links */
+        }
+
+        .navbar img {
+            margin-right: auto; /* Aligns the logo to the left */
+        }
+
+        /* Container styles */
+        .container {
+            flex: 1;
         }
 
         h2 {
@@ -67,33 +94,53 @@
             color: #ff5e62;
         }
 
-        h3 {
+        .footer {
+            background-color: #380015;
+            color: #ffffff;
             text-align: center;
-            margin-top: 20px;
+            padding: 20px;
         }
     </style>
 </head>
 
 <body>
-    <h2>View Cart</h2>
 
-    <div class="item-container">
-        {% for item in data %}
-        <div class="item-card">
-            <div class="item-details">
-                <h3>{{item[1]}}</h3>
-                <p><strong>Category:</strong> {{item[2]}}</p>
-                <p><strong>Quantity:</strong> {{item[3]}}</p>
-                <p><strong>Price:</strong> ${{item[4]}}</p>
-            </div>
-            <form action="{{url_for('deleteitem')}}" method="POST">
-                <input type="hidden" name="productId" value="{{item[0]}}">
-                <button class="remove-button" type="submit">Remove</button>
-            </form>
+    <!-- Navbar -->
+    <div class="navbar">
+        <img src="images/logo.png" alt="Logo" height="40">
+        <div>
+            <a href="/">Home</a>
+            <a href="/logout">Logout</a>
         </div>
-        {% endfor %}
     </div>
-    <a href='/homep'><h3>Home</h3></a>
+
+    <!-- Content -->
+    <div class="container">
+        <h2>View Cart</h2>
+
+        <div class="item-container">
+            {% for item in data %}
+            <div class="item-card">
+                <div class="item-details">
+                    <h3>{{item[1]}}</h3>
+                    <p><strong>Category:</strong> {{item[2]}}</p>
+                    <p><strong>Quantity:</strong> {{item[3]}}</p>
+                    <p><strong>Price:</strong> ${{item[4]}}</p>
+                </div>
+                <form action="{{url_for('deleteitem')}}" method="POST">
+                    <input type="hidden" name="productId" value="{{item[0]}}">
+                    <button class="remove-button" type="submit">Remove</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Liqour
+    </div>
+
 </body>
 
 </html>

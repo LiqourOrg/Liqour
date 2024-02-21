@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>View Inventory</title>
     <style>
         * {
             font-family: Helvetica, sans-serif;
@@ -13,15 +14,32 @@
             padding: 0;
             background-color: #380015; /* Set background color */
             color: #ffffff; /* Set text color */
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #380015;
+            padding: 15px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        /* Logo styles */
+        .logo {
+            height: 40px;
+            width: auto;
         }
 
         h2 {
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .card-container {
@@ -29,6 +47,7 @@
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
+            margin-bottom: 100px; /* Adjust margin bottom to make space for the footer */
         }
 
         .card {
@@ -47,13 +66,39 @@
         .card p {
             margin: 5px 0;
         }
+
+        /* Footer styles */
+        .footer {
+            background-color: #380015;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0; /* Ensure the footer touches the left corner */
+            right: 0; /* Ensure the footer touches the right corner */
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div>
+            <a href="/"><img src="images/logo.png" alt="Logo" class="logo"></a>
+        </div>
+        <div>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <!-- Content -->
     <h2>View Inventory</h2>
 
     <div class="card-container">
+        <!-- Add your content here -->
         {% for item in data %}
         <div class="card">
             <h3>{{item[1]}}</h3>
@@ -64,6 +109,12 @@
         </div>
         {% endfor %}
     </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Liqour 
+    </div>
+
 </body>
 
 </html>

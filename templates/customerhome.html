@@ -15,6 +15,9 @@
             background-color: #380015;
             color: #ffffff;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         a {
@@ -39,6 +42,23 @@
         .header h3 {
             margin: 0;
             color: #ffffff;
+        }
+
+        /* Style the navigation bar */
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav img {
+            height: 40px;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: #ffffff;
+            margin-right: 20px;
+            text-decoration: none;
         }
 
         /* Grid layout for columns */
@@ -74,16 +94,32 @@
         .button:hover {
             background-color: #ff5e62;
         }
+
+        /* Footer styles */
+        .footer {
+            background-color: #380015;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- Header with navigation bar -->
     <div class="header">
-        <h2>Welcome, {{ userName }}</h2>
-        <a href="/getcart"><button class="button">Cart ></button></a>
+        <nav>
+            <img src="images/logo.png" alt="Logo">
+        </nav>
+        <nav>
+            <a href="/getcart">Cart</a>
+            <a href="/logout">Logout</a>
+        </nav>
     </div>
 
+    <!-- Content -->
     <div class="header">
         <h3>Bestsellers:</h3>
         <a href="/viewproducts"><button class="button">View All Products ></button></a>
@@ -114,6 +150,11 @@
             <p>{{ item[1] }} product(s)</p>
         </div>
         {% endfor %}
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Liqour
     </div>
 
 </body>

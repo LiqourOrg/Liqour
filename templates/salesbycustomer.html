@@ -2,73 +2,137 @@
 <html>
 
 <head>
-  <style>
-    * {
-      font-family: Helvetica, sans-serif;
-      box-sizing: border-box;
-    }
+    <title>Sales By Customer</title>
+    <style>
+        * {
+            font-family: Helvetica, sans-serif;
+            box-sizing: border-box;
+        }
 
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #380015; /* Set background color */
-      color: #ffffff; /* Set text color */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
-    }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #380015; /* Set background color */
+            color: #ffffff; /* Set text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
 
-    h2 {
-      margin-bottom: 20px;
-    }
+        /* Navbar styles */
+        .navbar {
+            background-color: #380015;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
 
-    table {
-      border-collapse: collapse;
-      width: 80%; /* Adjust table width */
-      margin-bottom: 20px;
-      border: 2px solid #ffffff; /* Add border */
-      border-radius: 10px; /* Add border radius */
-    }
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
 
-    th,
-    td {
-      border: 1px solid #ffffff; /* Set border color */
-      padding: 10px;
-      text-align: center;
-    }
+        .navbar img {
+            height: 40px;
+        }
 
-    th {
-      background-color: #380015; /* Set header background color */
-    }
+        /* Content styles */
+        .container {
+            padding: 80px 20px 20px; /* Adjust top padding to account for navbar height */
+            text-align: center;
+        }
 
-    tr:nth-child(even) {
-      background-color: #331245; /* Set even row background color */
-    }
-  </style>
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%; /* Adjust table width */
+            margin-bottom: 20px;
+            border: 2px solid #ffffff; /* Add border */
+            border-radius: 10px; /* Add border radius */
+        }
+
+        th,
+        td {
+            border: 1px solid #ffffff; /* Set border color */
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #380015; /* Set header background color */
+        }
+
+        tr:nth-child(even) {
+            background-color: #331245; /* Set even row background color */
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: #380015;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0; /* Ensure the footer touches the left corner */
+            right: 0; /* Ensure the footer touches the right corner */
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
-  <h2>Sales By Customer</h2>
 
-  <table>
-    <tr>
-      <th>Customer Name</th>
-      <th>Orders</th>
-      <th>Total Sales</th>
-      <th>Average amount spent per transaction</th>
-    </tr>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div>
+            <a href="/"><img src="images/logo.png" alt="Logo"></a>
+        </div>
+        <div>
+            <a href="/">Home</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
 
-    {% for item in data %}
-    <tr>
-      <td>{{item[1]}} {{item[2]}}</td>
-      <td>{{item[3]}}</td>
-      <td>{{item[4]}}</td>
-      <td>{{item[5]}}</td>
-    </tr>
-    {% endfor %}
-  </table>
+    <!-- Content -->
+    <div class="container">
+        <h2>Sales By Customer</h2>
+
+        <table>
+            <tr>
+                <th>Customer Name</th>
+                <th>Orders</th>
+                <th>Total Sales</th>
+                <th>Average amount spent per transaction</th>
+            </tr>
+
+            {% for item in data %}
+            <tr>
+                <td>{{item[1]}} {{item[2]}}</td>
+                <td>{{item[3]}}</td>
+                <td>{{item[4]}}</td>
+                <td>{{item[5]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Liqour
+    </div>
+
 </body>
 
 </html>

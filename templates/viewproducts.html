@@ -11,18 +11,32 @@
         body {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             background-color: #380015;
-            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: #380015;
+            color: #ffffff;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .search-bar {
+            margin-top: 20px;
+            text-align: center;
         }
 
         .grid-container {
-            display: flex; /* Change to flex container */
-            flex-wrap: wrap; /* Allow items to wrap */
-            justify-content: center; /* Center items horizontally */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 20px;
             padding: 20px;
         }
@@ -32,8 +46,8 @@
             padding: 16px;
             text-align: center;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            width: 200px; /* Set a fixed width for each item */
-            border-radius: 10px; /* Add border radius */
+            width: 200px;
+            border-radius: 10px;
         }
 
         .button {
@@ -52,11 +66,37 @@
         .button:hover {
             background-color: #ff5e62;
         }
+
+        .footer {
+            background-color: #380015;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- Navbar -->
+    <div class="navbar">
+        <div>
+            <a href="/"><img src="images/logo.png" alt="Logo" class="logo"></a>
+        </div>
+        <div>
+            <form class="search-bar" action="/search" method="GET">
+                <input type="text" name="query" placeholder="Search products...">
+                <button type="submit" class="button">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product grid -->
     <h2 style="text-align: center; color: #ffffff; margin-top: 20px;">View Items</h2>
 
     <div class="grid-container">
@@ -74,6 +114,11 @@
             </form>
         </div>
         {% endfor %}
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Liqour
     </div>
 
 </body>
