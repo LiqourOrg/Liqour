@@ -504,7 +504,7 @@ def deleteitem():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=False)
     render_template("begin.html", title="Liquore", error="<None>")
 
 # @app.route("/")
