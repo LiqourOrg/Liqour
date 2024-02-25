@@ -1,4 +1,4 @@
-# CS 348 Project
+# SWE-ALX Potfolio Project
 from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
 from mysql.connector import errorcode
